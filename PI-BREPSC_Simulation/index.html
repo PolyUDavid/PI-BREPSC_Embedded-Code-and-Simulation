@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PI-BREPSC 3D Traffic Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 100;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 100;
+            max-width: 200px;
+        }
+        .status {
+            margin: 5px 0;
+        }
+        .high-intent { color: #ff4444; }
+        .medium-intent { color: #ffaa00; }
+        .low-intent { color: #44ff44; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="info">
+            <h3>❤️ PI-BREPSC 3D 交通仿真系统</h3>
+            <div id="traffic-lights"></div>
+            <div id="selected-pedestrian"></div>
+            <div id="vehicle-count"></div>
+            <div id="ai-decisions"></div>
+            <div id="rsu-data"></div>
+        </div>
+        <div id="controls">
+            <h4>🚶 手动控制</h4>
+            <button id="pedestrian-cross-button" style="background-color: #2196F3; color: white; padding: 10px 15px; border: none; border-radius: 5px; pointer-events: auto; margin-bottom: 10px; width: 100%;">🚶 行人过街按钮</button>
+            <button id="generate-pedestrians-button" style="background-color: #FF9800; color: white; padding: 10px 15px; border: none; border-radius: 5px; pointer-events: auto; margin-bottom: 10px; width: 100%;">👥 生成更多行人</button>
+            <button id="reset-view-button" style="background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 5px; pointer-events: auto; width: 100%;">🔄 重置视角</button>
+            <p style="font-size: 12px; margin-top: 10px;">更新#53 - 改进交通灯+斑马线+自动生成行人</p>
+        </div>
+    </div>
+
+    <!-- Three.js CDN -->
+    <script src="https://unpkg.com/three@0.144.0/build/three.min.js"></script>
+    <script>
+        // Simple OrbitControls implementation
+        class SimpleOrbitControls {
+            constructor(camera, domElement) {
+            this.camera = camera;
+                this.domElement = domElement;
+                this.target = new THREE.Vector3(0, 0, 0);
+            this.enableDamping = true;
+            this.dampingFactor = 0.05;
+                
+                this.spherical = new THREE.Spherical();
+                this.sphericalDelta = new THREE.Spherical();
+                this.scale = 1;
+            
+                this.rotateStart = new THREE.Vector2();
+                this.rotateEnd = new THREE.Vector2();
+                this.rotateDelta = new THREE.Vector2();
+            
+                this.isRotating = false;
+                
+                // Add set method for target compatibility
+                this.target.set = function(x, y, z) {
+                    this.x = x;
+                    this.y = y;
+                    this.z = z;
+                    return this;
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.domElement.addEventListener('mousedown', this.onMouseDown.bind(this));
+                this.domElement.addEventListener('wheel', this.onMouseWheel.bind(this));
+                this.domElement.addEventListener('contextmenu', (e) => e.preventDefault());
+            }
+            
+            onMouseDown(event) {
+                if (event.button === 0) {
+                    this.isRotating = true;
+                    this.rotateStart.set(event.clientX, event.clientY);
+                    document.addEventListener('mousemove', this.onMouseMove.bind(this));
+                    document.addEventListener('mouseup', this.onMouseUp.bind(this));
+                }
+            }
+            
+            onMouseMove(event) {
+                if (!this.isRotating) return;
+                
+                this.rotateEnd.set(event.clientX, event.clientY);
+                this.rotateDelta.subVectors(this.rotateEnd, this.rotateStart);
+                
+                const element = this.domElement;
+                this.sphericalDelta.theta -= 2 * Math.PI * this.rotateDelta.x / element.clientWidth;
+                this.sphericalDelta.phi -= 2 * Math.PI * this.rotateDelta.y / element.clientHeight;
+                
+                this.rotateStart.copy(this.rotateEnd);
+                this.update();
+            }
+            
+            onMouseUp() {
+                this.isRotating = false;
+                document.removeEventListener('mousemove', this.onMouseMove.bind(this));
+                document.removeEventListener('mouseup', this.onMouseUp.bind(this));
+            }
+            
+            onMouseWheel(event) {
+                if (event.deltaY < 0) {
+                    this.scale /= 0.95;
+                } else if (event.deltaY > 0) {
+                    this.scale *= 0.95;
+                }
+                this.update();
+            }
+            
+            update() {
+                const offset = new THREE.Vector3();
+                offset.copy(this.camera.position).sub(this.target);
+                this.spherical.setFromVector3(offset);
+                
+                this.spherical.theta += this.sphericalDelta.theta;
+                this.spherical.phi += this.sphericalDelta.phi;
+                this.spherical.radius *= this.scale;
+                
+                this.spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, this.spherical.phi));
+                this.spherical.radius = Math.max(5, Math.min(200, this.spherical.radius));
+                
+                offset.setFromSpherical(this.spherical);
+                this.camera.position.copy(this.target).add(offset);
+                this.camera.lookAt(this.target);
+                
+                if (this.enableDamping) {
+                    this.sphericalDelta.theta *= (1 - this.dampingFactor);
+                    this.sphericalDelta.phi *= (1 - this.dampingFactor);
+                } else {
+                    this.sphericalDelta.set(0, 0, 0);
+                }
+                this.scale = 1;
+            }
+        }
+    </script>
+    <script>
+        // Global variables
+        let scene, camera, renderer, controls;
+        let trafficLights = [];
+        let rsuSensors = [];
+        let pedestrians = [];
+        let vehicles = [];
+        
+        // Initialize Three.js
+        function initThreeJS() {
+            console.log('正在初始化 Three.js...');
+            
+            // 场景设置
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0xcccccc, 10, 500);
+            
+            // 相机设置
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(30, 40, 30);
+            
+            // 渲染器设置
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x87CEEB, 1); // 天蓝色背景
+            renderer.shadowMap.enabled = true;
+            
+            // 添加渲染器到DOM
+            document.getElementById('container').appendChild(renderer.domElement);
+            
+            // 添加控制器
+            controls = new SimpleOrbitControls(camera, renderer.domElement);
+            
+            console.log('Three.js 初始化成功');
+            return true;
+        }
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Animate priority indicators
+            const time = Date.now() * 0.005;
+            pedestrians.forEach(pedGroup => {
+                pedGroup.children.forEach(child => {
+                    if (child.userData && child.userData.pulsePhase !== undefined) {
+                        const scale = 1 + 0.3 * Math.sin(time + child.userData.pulsePhase);
+                        child.scale.set(scale, scale, scale);
+                    }
+                });
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize on window load
+        window.addEventListener('load', initApp);
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Initialize scene components
+        function initScene() {
+            console.log('设置场景中...');
+            
+            // 相机控制器 (已在 initThreeJS 中创建)
+            if (controls) {
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.target.set(0, 0, 0);
+            }
+
+            // 光照设置
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(50, 100, 50);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            directionalLight.shadow.camera.near = 0.5;
+            directionalLight.shadow.camera.far = 500;
+            directionalLight.shadow.camera.left = -100;
+            directionalLight.shadow.camera.right = 100;
+            directionalLight.shadow.camera.top = 100;
+            directionalLight.shadow.camera.bottom = -100;
+            scene.add(directionalLight);
+            
+            console.log('场景光照设置完成');
+        }
+
+                 // Create environment
+         function createEnvironment() {
+             // Ground - realistic asphalt and grass texture
+             const groundGeometry = new THREE.PlaneGeometry(200, 200);
+             const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x90EE90 });
+             const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+             ground.rotation.x = -Math.PI / 2;
+             ground.receiveShadow = true;
+             scene.add(ground);
+
+             // Roads with lane markings
+             const roadMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+             
+             // Horizontal road
+             const hRoadGeometry = new THREE.PlaneGeometry(100, 20);
+             const hRoad = new THREE.Mesh(hRoadGeometry, roadMaterial);
+             hRoad.rotation.x = -Math.PI / 2;
+             hRoad.position.y = 0.01;
+             scene.add(hRoad);
+
+             // Vertical road
+             const vRoadGeometry = new THREE.PlaneGeometry(20, 100);
+             const vRoad = new THREE.Mesh(vRoadGeometry, roadMaterial);
+             vRoad.rotation.x = -Math.PI / 2;
+             vRoad.position.y = 0.01;
+             scene.add(vRoad);
+
+             // Lane markings
+             const laneMarkingMaterial = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+             // Horizontal road center line
+             for (let i = -40; i <= 40; i += 4) {
+                 const marking = new THREE.Mesh(
+                     new THREE.PlaneGeometry(2, 0.3),
+                     laneMarkingMaterial
+                 );
+                 marking.rotation.x = -Math.PI / 2;
+                 marking.position.set(i, 0.02, 0);
+                 scene.add(marking);
+             }
+             // Vertical road center line
+             for (let i = -40; i <= 40; i += 4) {
+                 const marking = new THREE.Mesh(
+                     new THREE.PlaneGeometry(0.3, 2),
+                     laneMarkingMaterial
+                 );
+                 marking.rotation.x = -Math.PI / 2;
+                 marking.position.set(0, 0.02, i);
+                 scene.add(marking);
+             }
+
+             // Crosswalks with zebra stripes (改进的斑马线)
+             
+             // 创建斑马线背景
+             const crosswalkBgMaterial = new THREE.MeshLambertMaterial({ 
+                 color: 0xdddddd,
+                 transparent: true,
+                 opacity: 0.9
+             });
+             
+             // 水平斑马线背景
+             const hCrosswalkBg = new THREE.Mesh(
+                 new THREE.PlaneGeometry(24, 20),
+                 crosswalkBgMaterial
+             );
+             hCrosswalkBg.rotation.x = -Math.PI / 2;
+             hCrosswalkBg.position.set(0, 0.01, 0);
+             scene.add(hCrosswalkBg);
+             
+             // 垂直斑马线背景
+             const vCrosswalkBg = new THREE.Mesh(
+                 new THREE.PlaneGeometry(20, 24),
+                 crosswalkBgMaterial
+             );
+             vCrosswalkBg.rotation.x = -Math.PI / 2;
+             vCrosswalkBg.position.set(0, 0.01, 0);
+             scene.add(vCrosswalkBg);
+             
+             // 改进的斑马线条纹材质
+             const crosswalkStripeMaterial = new THREE.MeshLambertMaterial({ 
+                 color: 0xffffff,
+                 transparent: true,
+                 opacity: 0.95
+             });
+             
+             // 水平斑马线条纹 (更密集、更真实)
+             for (let i = -10; i <= 10; i += 2.5) {
+                 const stripe = new THREE.Mesh(
+                     new THREE.PlaneGeometry(2, 18),
+                     crosswalkStripeMaterial
+                 );
+                 stripe.rotation.x = -Math.PI / 2;
+                 stripe.position.set(i, 0.015, 0);
+                 stripe.castShadow = false;
+                 stripe.receiveShadow = true;
+                 scene.add(stripe);
+             
+                 // 添加条纹边框效果
+                 const stripeBorder = new THREE.Mesh(
+                     new THREE.PlaneGeometry(2.1, 18.1),
+                     new THREE.MeshLambertMaterial({ 
+                         color: 0xcccccc,
+                         transparent: true,
+                         opacity: 0.3
+                     })
+                 );
+                 stripeBorder.rotation.x = -Math.PI / 2;
+                 stripeBorder.position.set(i, 0.012, 0);
+                 scene.add(stripeBorder);
+             }
+             
+             // 垂直斑马线条纹 (更密集、更真实)
+             for (let i = -10; i <= 10; i += 2.5) {
+                 const stripe = new THREE.Mesh(
+                     new THREE.PlaneGeometry(18, 2),
+                     crosswalkStripeMaterial
+                 );
+                 stripe.rotation.x = -Math.PI / 2;
+                 stripe.position.set(0, 0.015, i);
+                 stripe.castShadow = false;
+                 stripe.receiveShadow = true;
+                 scene.add(stripe);
+                 
+                 // 添加条纹边框效果
+                 const stripeBorder = new THREE.Mesh(
+                     new THREE.PlaneGeometry(18.1, 2.1),
+                     new THREE.MeshLambertMaterial({ 
+                         color: 0xcccccc,
+                         transparent: true,
+                         opacity: 0.3
+                     })
+                 );
+                 stripeBorder.rotation.x = -Math.PI / 2;
+                 stripeBorder.position.set(0, 0.012, i);
+                 scene.add(stripeBorder);
+             }
+             
+             // 添加斑马线边界线
+             const boundaryMaterial = new THREE.MeshLambertMaterial({ 
+                 color: 0x666666,
+                 transparent: true,
+                 opacity: 0.8
+             });
+             
+             // 水平边界线
+             const hBoundary1 = new THREE.Mesh(
+                 new THREE.PlaneGeometry(24, 0.2),
+                 boundaryMaterial
+             );
+             hBoundary1.rotation.x = -Math.PI / 2;
+             hBoundary1.position.set(0, 0.02, 10);
+             scene.add(hBoundary1);
+             
+             const hBoundary2 = new THREE.Mesh(
+                 new THREE.PlaneGeometry(24, 0.2),
+                 boundaryMaterial
+             );
+             hBoundary2.rotation.x = -Math.PI / 2;
+             hBoundary2.position.set(0, 0.02, -10);
+             scene.add(hBoundary2);
+             
+             // 垂直边界线
+             const vBoundary1 = new THREE.Mesh(
+                 new THREE.PlaneGeometry(0.2, 24),
+                 boundaryMaterial
+             );
+             vBoundary1.rotation.x = -Math.PI / 2;
+             vBoundary1.position.set(10, 0.02, 0);
+             scene.add(vBoundary1);
+             
+             const vBoundary2 = new THREE.Mesh(
+                 new THREE.PlaneGeometry(0.2, 24),
+                 boundaryMaterial
+             );
+             vBoundary2.rotation.x = -Math.PI / 2;
+             vBoundary2.position.set(-10, 0.02, 0);
+             scene.add(vBoundary2);
+
+             // Sidewalks
+             const sidewalkMaterial = new THREE.MeshLambertMaterial({ color: 0x888888 });
+             // North sidewalk
+             const nSidewalk = new THREE.Mesh(
+                 new THREE.PlaneGeometry(60, 5),
+                 sidewalkMaterial
+             );
+             nSidewalk.rotation.x = -Math.PI / 2;
+             nSidewalk.position.set(0, 0.05, 15);
+             scene.add(nSidewalk);
+             
+             // South sidewalk
+             const sSidewalk = new THREE.Mesh(
+                 new THREE.PlaneGeometry(60, 5),
+                 sidewalkMaterial
+             );
+             sSidewalk.rotation.x = -Math.PI / 2;
+             sSidewalk.position.set(0, 0.05, -15);
+             scene.add(sSidewalk);
+             
+             // East sidewalk
+             const eSidewalk = new THREE.Mesh(
+                 new THREE.PlaneGeometry(5, 60),
+                 sidewalkMaterial
+             );
+             eSidewalk.rotation.x = -Math.PI / 2;
+             eSidewalk.position.set(15, 0.05, 0);
+             scene.add(eSidewalk);
+             
+             // West sidewalk
+             const wSidewalk = new THREE.Mesh(
+                 new THREE.PlaneGeometry(5, 60),
+                 sidewalkMaterial
+             );
+             wSidewalk.rotation.x = -Math.PI / 2;
+             wSidewalk.position.set(-15, 0.05, 0);
+             scene.add(wSidewalk);
+
+             // Buildings with more detail
+             const buildingPositions = [
+                 { x: -40, z: -40, height: 25, color: 0x888899, windows: true },
+                 { x: 40, z: -40, height: 30, color: 0x999988, windows: true },
+                 { x: -40, z: 40, height: 20, color: 0x889988, windows: true },
+                 { x: 40, z: 40, height: 35, color: 0x998899, windows: true }
+             ];
+
+             buildingPositions.forEach(pos => {
+                 const geometry = new THREE.BoxGeometry(15, pos.height, 15);
+                 const material = new THREE.MeshLambertMaterial({ color: pos.color });
+                 const building = new THREE.Mesh(geometry, material);
+                 building.position.set(pos.x, pos.height / 2, pos.z);
+                 building.castShadow = true;
+                 scene.add(building);
+                 
+                 // Add windows
+                 if (pos.windows) {
+                     const windowMaterial = new THREE.MeshLambertMaterial({ color: 0x4444ff });
+                     for (let floor = 2; floor < pos.height; floor += 3) {
+                         for (let i = -5; i <= 5; i += 3) {
+                             // Front windows
+                             const window1 = new THREE.Mesh(
+                                 new THREE.PlaneGeometry(1, 1.5),
+                                 windowMaterial
+                             );
+                             window1.position.set(pos.x + i, floor, pos.z + 7.6);
+                             scene.add(window1);
+                             
+                             // Side windows
+                             const window2 = new THREE.Mesh(
+                                 new THREE.PlaneGeometry(1, 1.5),
+                                 windowMaterial
+                             );
+                             window2.position.set(pos.x + 7.6, floor, pos.z + i);
+                             window2.rotation.y = Math.PI / 2;
+                             scene.add(window2);
+                         }
+                     }
+                 }
+             });
+
+             // Traffic lights and RSU sensors
+             createTrafficLights();
+             createRSUSensors();
+         }
+
+        function createTrafficLights() {
+            const positions = [
+                { x: 12, z: 12, rotation: Math.PI * 1.25 },      // NE corner
+                { x: -12, z: 12, rotation: Math.PI * 0.75 },     // NW corner  
+                { x: 12, z: -12, rotation: Math.PI * 1.75 },     // SE corner
+                { x: -12, z: -12, rotation: Math.PI * 0.25 }     // SW corner
+            ];
+
+            positions.forEach((pos, index) => {
+                // Base foundation
+                const baseGeometry = new THREE.CylinderGeometry(1, 1, 0.3);
+                const baseMaterial = new THREE.MeshLambertMaterial({ color: 0x555555 });
+                const base = new THREE.Mesh(baseGeometry, baseMaterial);
+                base.position.set(pos.x, 0.15, pos.z);
+                scene.add(base);
+
+                // Pole
+                const poleGeometry = new THREE.CylinderGeometry(0.15, 0.15, 6);
+                const poleMaterial = new THREE.MeshLambertMaterial({ color: 0x444444 });
+                const pole = new THREE.Mesh(poleGeometry, poleMaterial);
+                pole.position.set(pos.x, 3.3, pos.z);
+                pole.castShadow = true;
+                scene.add(pole);
+
+                // Horizontal arm
+                const armGeometry = new THREE.CylinderGeometry(0.08, 0.08, 4);
+                const armMaterial = new THREE.MeshLambertMaterial({ color: 0x444444 });
+                const arm = new THREE.Mesh(armGeometry, armMaterial);
+                arm.position.set(pos.x - 2 * Math.cos(pos.rotation), 6, pos.z - 2 * Math.sin(pos.rotation));
+                arm.rotation.z = Math.PI / 2;
+                arm.rotation.y = pos.rotation;
+                scene.add(arm);
+
+                // Light housing - main traffic light (更大的车辆交通灯)
+                const housingGeometry = new THREE.BoxGeometry(1.2, 3.6, 0.6);
+                const housingMaterial = new THREE.MeshLambertMaterial({ color: 0x222222 });
+                const housing = new THREE.Mesh(housingGeometry, housingMaterial);
+                housing.position.set(
+                    pos.x - 3.5 * Math.cos(pos.rotation), 
+                    5.5, 
+                    pos.z - 3.5 * Math.sin(pos.rotation)
+                );
+                housing.rotation.y = pos.rotation;
+                housing.castShadow = true;
+                scene.add(housing);
+
+                // Traffic lights with proper positioning (更大的车辆灯)
+                const lightPositions = [
+                    { y: 6.5, color: 0xff0000, type: 'red' },
+                    { y: 5.5, color: 0xffff00, type: 'yellow' },
+                    { y: 4.5, color: 0x00ff00, type: 'green' }
+                ];
+
+                lightPositions.forEach(lightPos => {
+                    // Light lens (更大的车辆灯泡)
+                    const light = new THREE.Mesh(
+                        new THREE.SphereGeometry(0.35),
+                        new THREE.MeshLambertMaterial({ 
+                            color: lightPos.type === 'red' ? lightPos.color : 0x333333,
+                            emissive: lightPos.type === 'red' ? 0x330000 : 0x000000
+                        })
+                    );
+                    light.position.set(
+                        pos.x - 3.5 * Math.cos(pos.rotation) + 0.35 * Math.cos(pos.rotation), 
+                        lightPos.y, 
+                        pos.z - 3.5 * Math.sin(pos.rotation) + 0.35 * Math.sin(pos.rotation)
+                    );
+                    light.userData = { type: lightPos.type, id: index, corner: index };
+                    light.name = 'traffic_light_' + lightPos.type + '_' + index;
+                    scene.add(light);
+                    trafficLights.push(light);
+
+                    // Light glow effect (更强的光效)
+                    if (lightPos.type === 'red') {
+                        const glowLight = new THREE.PointLight(lightPos.color, 0.8, 15);
+                        glowLight.position.copy(light.position);
+                        scene.add(glowLight);
+                        light.userData.glowLight = glowLight;
+                    }
+                });
+
+                // Pedestrian signal (更小的行人交通灯)
+                const pedHousingGeometry = new THREE.BoxGeometry(0.3, 0.5, 0.2);
+                const pedHousing = new THREE.Mesh(pedHousingGeometry, housingMaterial);
+                pedHousing.position.set(
+                    pos.x - 1.5 * Math.cos(pos.rotation), 
+                    2.3, 
+                    pos.z - 1.5 * Math.sin(pos.rotation)
+                );
+                pedHousing.rotation.y = pos.rotation + Math.PI;
+                scene.add(pedHousing);
+
+                // Pedestrian walk/don't walk lights (更小的行人灯)
+                const walkLight = new THREE.Mesh(
+                    new THREE.PlaneGeometry(0.15, 0.15),
+                    new THREE.MeshLambertMaterial({ color: 0x004400 })
+                );
+                walkLight.position.set(
+                    pos.x - 1.5 * Math.cos(pos.rotation) + 0.12 * Math.cos(pos.rotation), 
+                    2.4, 
+                    pos.z - 1.5 * Math.sin(pos.rotation) + 0.12 * Math.sin(pos.rotation)
+                );
+                walkLight.rotation.y = pos.rotation + Math.PI;
+                scene.add(walkLight);
+                walkLight.name = 'pedestrian_light_walk_' + index;
+                trafficLights.push(walkLight);
+
+                const dontWalkLight = new THREE.Mesh(
+                    new THREE.PlaneGeometry(0.15, 0.15),
+                    new THREE.MeshLambertMaterial({ color: 0xff0000 })
+                );
+                dontWalkLight.position.set(
+                    pos.x - 1.5 * Math.cos(pos.rotation) + 0.12 * Math.cos(pos.rotation), 
+                    2.2, 
+                    pos.z - 1.5 * Math.sin(pos.rotation) + 0.12 * Math.sin(pos.rotation)
+                );
+                dontWalkLight.rotation.y = pos.rotation + Math.PI;
+                scene.add(dontWalkLight);
+                dontWalkLight.name = 'pedestrian_light_dontwalk_' + index;
+                trafficLights.push(dontWalkLight);
+            });
+        }
+
+        // Create RSU sensors 
+        function createRSUSensors() {
+            const rsuPositions = [
+                { x: 15, z: 0, name: "RSU-East" },
+                { x: -15, z: 0, name: "RSU-West" },
+                { x: 0, z: 15, name: "RSU-North" },
+                { x: 0, z: -15, name: "RSU-South" },
+                { x: 20, z: 20, name: "RSU-NE" },
+                { x: -20, z: 20, name: "RSU-NW" },
+                { x: 20, z: -20, name: "RSU-SE" },
+                { x: -20, z: -20, name: "RSU-SW" }
+            ];
+
+            rsuPositions.forEach((pos, index) => {
+                // RSU pole
+                const poleGeometry = new THREE.CylinderGeometry(0.1, 0.1, 8);
+                const poleMaterial = new THREE.MeshLambertMaterial({ color: 0x666666 });
+                const pole = new THREE.Mesh(poleGeometry, poleMaterial);
+                pole.position.set(pos.x, 4, pos.z);
+                pole.castShadow = true;
+                scene.add(pole);
+
+                // RSU equipment box
+                const boxGeometry = new THREE.BoxGeometry(1.2, 0.8, 0.6);
+                const boxMaterial = new THREE.MeshLambertMaterial({ color: 0x333366 });
+                const equipmentBox = new THREE.Mesh(boxGeometry, boxMaterial);
+                equipmentBox.position.set(pos.x, 7.5, pos.z);
+                equipmentBox.castShadow = true;
+                scene.add(equipmentBox);
+
+                // Antenna array
+                for (let i = 0; i < 3; i++) {
+                    const antennaGeometry = new THREE.CylinderGeometry(0.02, 0.02, 1.5);
+                    const antennaMaterial = new THREE.MeshLambertMaterial({ color: 0x888888 });
+                    const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+                    antenna.position.set(pos.x + (i - 1) * 0.3, 9, pos.z);
+                    scene.add(antenna);
+                }
+
+                // Camera/sensor dome
+                const domeGeometry = new THREE.SphereGeometry(0.3, 16, 8);
+                const domeMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x222222,
+                    transparent: true,
+                    opacity: 0.7
+                });
+                const dome = new THREE.Mesh(domeGeometry, domeMaterial);
+                dome.position.set(pos.x, 8.5, pos.z);
+                scene.add(dome);
+
+                // Status LED indicator
+                const ledGeometry = new THREE.SphereGeometry(0.05);
+                const ledMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x00ff00,
+                    emissive: 0x002200
+                });
+                const led = new THREE.Mesh(ledGeometry, ledMaterial);
+                led.position.set(pos.x, 7.9, pos.z + 0.35);
+                scene.add(led);
+
+                // Blinking LED effect
+                setInterval(() => {
+                    led.material.emissive.setHex(led.material.emissive.getHex() === 0x002200 ? 0x004400 : 0x002200);
+                }, 1000);
+
+                // Communication range visualization (optional)
+                const rangeGeometry = new THREE.RingGeometry(8, 8.2, 32);
+                const rangeMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x0066ff,
+                    transparent: true,
+                    opacity: 0.1
+                });
+                const rangeIndicator = new THREE.Mesh(rangeGeometry, rangeMaterial);
+                rangeIndicator.rotation.x = -Math.PI / 2;
+                rangeIndicator.position.set(pos.x, 0.1, pos.z);
+                scene.add(rangeIndicator);
+
+                // Store RSU reference
+                rsuSensors.push({
+                    position: pos,
+                    equipment: equipmentBox,
+                    led: led,
+                    name: pos.name
+                });
+            });
+        }
+        
+        // Dynamic objects
+
+        function createPedestrian(data) {
+            const group = new THREE.Group();
+            
+            // Determine pedestrian color based on priority and anomaly
+            let pedestrianColor = 0x4444ff; // Default blue
+            if (data.anomaly) {
+                pedestrianColor = 0xff0000; // Red for anomalous
+            } else if (data.priority === 'high') {
+                pedestrianColor = 0xff4444; // Red for high priority
+            } else if (data.priority === 'medium') {
+                pedestrianColor = 0xff9800; // Orange for medium priority
+            } else {
+                pedestrianColor = 0x4CAF50; // Green for normal priority
+            }
+            
+            // Head
+            const headGeometry = new THREE.SphereGeometry(0.15);
+            const headMaterial = new THREE.MeshLambertMaterial({ color: 0xffdbac });
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            head.position.y = 1.75;
+            head.castShadow = true;
+            group.add(head);
+
+            // Body
+            const bodyGeometry = new THREE.CylinderGeometry(0.2, 0.25, 0.8);
+            const bodyMaterial = new THREE.MeshLambertMaterial({ color: pedestrianColor });
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.position.y = 1.2;
+            body.castShadow = true;
+            group.add(body);
+
+            // Arms  
+            const armGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.6);
+            const armMaterial = new THREE.MeshLambertMaterial({ color: pedestrianColor });
+            const leftArm = new THREE.Mesh(armGeometry, armMaterial);
+            leftArm.position.set(-0.3, 1.3, 0);
+            leftArm.rotation.z = 0.3;
+            leftArm.castShadow = true;
+            group.add(leftArm);
+            const rightArm = new THREE.Mesh(armGeometry, armMaterial);
+            rightArm.position.set(0.3, 1.3, 0);
+            rightArm.rotation.z = -0.3;
+            rightArm.castShadow = true;
+            group.add(rightArm);
+
+            // Legs
+            const legGeometry = new THREE.CylinderGeometry(0.08, 0.08, 0.7);
+            const legMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+            const leftLeg = new THREE.Mesh(legGeometry, legMaterial);
+            leftLeg.position.set(-0.1, 0.55, 0);
+            leftLeg.castShadow = true;
+            group.add(leftLeg);
+            const rightLeg = new THREE.Mesh(legGeometry, legMaterial);
+            rightLeg.position.set(0.1, 0.55, 0);
+            rightLeg.castShadow = true;
+            group.add(rightLeg);
+
+            // Feet
+            const footGeometry = new THREE.BoxGeometry(0.15, 0.05, 0.25);
+            const footMaterial = new THREE.MeshLambertMaterial({ color: 0x222222 });
+            const leftFoot = new THREE.Mesh(footGeometry, footMaterial);
+            leftFoot.position.set(-0.1, 0.1, 0.05);
+            leftFoot.castShadow = true;
+            group.add(leftFoot);
+            const rightFoot = new THREE.Mesh(footGeometry, footMaterial);
+            rightFoot.position.set(0.1, 0.1, 0.05);
+            rightFoot.castShadow = true;
+            group.add(rightFoot);
+
+            // Priority indicator (floating above head)
+            if (data.priority === 'high' || data.anomaly) {
+                const indicatorGeometry = new THREE.SphereGeometry(0.08);
+                const indicatorMaterial = new THREE.MeshLambertMaterial({ 
+                    color: data.anomaly ? 0xff0000 : 0xff4444,
+                    emissive: data.anomaly ? 0x220000 : 0x220000
+            });
+                const indicator = new THREE.Mesh(indicatorGeometry, indicatorMaterial);
+                indicator.position.y = 2.1;
+                group.add(indicator);
+                
+                // Pulsing animation for high priority/anomaly
+                indicator.userData.pulsePhase = Math.random() * Math.PI * 2;
+            }
+
+            // Wearable device indicator (smartwatch/fitness tracker)
+            const wearableGeometry = new THREE.BoxGeometry(0.06, 0.04, 0.08);
+            const wearableMaterial = new THREE.MeshLambertMaterial({ 
+                color: data.priority === 'high' ? 0x4CAF50 : 0x2196F3,
+                emissive: 0x001100
+            });
+            const wearable = new THREE.Mesh(wearableGeometry, wearableMaterial);
+            wearable.position.set(-0.25, 1.4, 0);
+            group.add(wearable);
+
+            // Intent probability visualization (height of glow around pedestrian)
+            if (data.intent_prob > 0.5) {
+                const glowGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.1);
+                const glowMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0xffff00,
+                    transparent: true,
+                    opacity: data.intent_prob * 0.3
+                });
+                const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+                glow.position.y = 0.05;
+                group.add(glow);
+            }
+
+            // Smartphone (some pedestrians carry phones)
+            if (Math.random() > 0.6) {
+                const phoneGeometry = new THREE.BoxGeometry(0.05, 0.1, 0.01);
+                const phoneMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 });
+                const phone = new THREE.Mesh(phoneGeometry, phoneMaterial);
+                phone.position.set(0.25, 1.5, 0.1);
+                group.add(phone);
+            }
+
+            // Backpack (some pedestrians have backpacks)
+            if (Math.random() > 0.7) {
+                const backpackGeometry = new THREE.BoxGeometry(0.3, 0.4, 0.15);
+                const backpackMaterial = new THREE.MeshLambertMaterial({ color: 0x444444 });
+                const backpack = new THREE.Mesh(backpackGeometry, backpackMaterial);
+                backpack.position.set(0, 1.6, -0.25);
+                group.add(backpack);
+            }
+
+            group.position.set((data.x - 600) / 20, 0, (data.y - 411.5) / 20);
+            group.userData = { 
+                id: data.id, 
+                type: 'pedestrian',
+                priority: data.priority,
+                anomaly: data.anomaly,
+                intent_prob: data.intent_prob
+            };
+            group.castShadow = true;
+            scene.add(group);
+            
+            return group;
+        }
+
+        function createVehicle(data) {
+            const group = new THREE.Group();
+            
+            // Vehicle colors based on type/state
+            const vehicleColors = [0xff4444, 0x4444ff, 0x44ff44, 0xffff44, 0xff44ff, 0x44ffff, 0xffffff, 0x888888];
+            const vehicleColor = vehicleColors[data.id % vehicleColors.length];
+            
+            // Car body - main chassis
+            const bodyGeometry = new THREE.BoxGeometry(1.8, 0.6, 4.2);
+            const bodyMaterial = new THREE.MeshLambertMaterial({ color: vehicleColor });
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.position.y = 0.3;
+            body.castShadow = true;
+            group.add(body);
+
+            // Car cabin/roof
+            const cabinGeometry = new THREE.BoxGeometry(1.6, 0.8, 2.5);
+            const cabinMaterial = new THREE.MeshLambertMaterial({ color: vehicleColor });
+            const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
+            cabin.position.set(0, 1.0, 0.3);
+            cabin.castShadow = true;
+            group.add(cabin);
+
+            // Windshield
+            const windshieldGeometry = new THREE.PlaneGeometry(1.5, 0.7);
+            const windshieldMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x4444ff, 
+                transparent: true, 
+                opacity: 0.3 
+            });
+            const windshield = new THREE.Mesh(windshieldGeometry, windshieldMaterial);
+            windshield.position.set(0, 1.2, 1.5);
+            windshield.rotation.x = -0.3;
+            group.add(windshield);
+
+            // Rear window
+            const rearWindowGeometry = new THREE.PlaneGeometry(1.5, 0.6);
+            const rearWindow = new THREE.Mesh(rearWindowGeometry, windshieldMaterial);
+            rearWindow.position.set(0, 1.1, -0.9);
+            rearWindow.rotation.x = 0.2;
+            group.add(rearWindow);
+
+            // Side windows
+            const sideWindowGeometry = new THREE.PlaneGeometry(2, 0.6);
+            const leftWindow = new THREE.Mesh(sideWindowGeometry, windshieldMaterial);
+            leftWindow.position.set(-0.85, 1.1, 0.3);
+            leftWindow.rotation.y = Math.PI / 2;
+            group.add(leftWindow);
+            const rightWindow = new THREE.Mesh(sideWindowGeometry, windshieldMaterial);
+            rightWindow.position.set(0.85, 1.1, 0.3);
+            rightWindow.rotation.y = -Math.PI / 2;
+            group.add(rightWindow);
+
+            // Wheels with rims
+            const wheelGeometry = new THREE.CylinderGeometry(0.35, 0.35, 0.25);
+            const wheelMaterial = new THREE.MeshLambertMaterial({ color: 0x222222 });
+            const rimGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.26);
+            const rimMaterial = new THREE.MeshLambertMaterial({ color: 0x888888 });
+            
+            const wheelPositions = [
+                { x: -0.8, z: 1.4 }, { x: 0.8, z: 1.4 },
+                { x: -0.8, z: -1.4 }, { x: 0.8, z: -1.4 }
+            ];
+
+            wheelPositions.forEach(pos => {
+                // Wheel tire
+                const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+                wheel.position.set(pos.x, 0.35, pos.z);
+                wheel.rotation.z = Math.PI / 2;
+                wheel.castShadow = true;
+                group.add(wheel);
+                
+                // Wheel rim
+                const rim = new THREE.Mesh(rimGeometry, rimMaterial);
+                rim.position.set(pos.x, 0.35, pos.z);
+                rim.rotation.z = Math.PI / 2;
+                group.add(rim);
+            });
+
+            // Headlights
+            const headlightGeometry = new THREE.SphereGeometry(0.15);
+            const headlightMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xffffff,
+                emissive: 0x444444
+            });
+            const leftHeadlight = new THREE.Mesh(headlightGeometry, headlightMaterial);
+            leftHeadlight.position.set(-0.6, 0.6, 2.2);
+            group.add(leftHeadlight);
+            const rightHeadlight = new THREE.Mesh(headlightGeometry, headlightMaterial);
+            rightHeadlight.position.set(0.6, 0.6, 2.2);
+            group.add(rightHeadlight);
+
+            // Taillights
+            const taillightMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xff0000,
+                emissive: 0x220000
+            });
+            const leftTaillight = new THREE.Mesh(headlightGeometry, taillightMaterial);
+            leftTaillight.position.set(-0.6, 0.6, -2.2);
+            leftTaillight.scale.set(0.7, 0.7, 0.7);
+            group.add(leftTaillight);
+            const rightTaillight = new THREE.Mesh(headlightGeometry, taillightMaterial);
+            rightTaillight.position.set(0.6, 0.6, -2.2);
+            rightTaillight.scale.set(0.7, 0.7, 0.7);
+            group.add(rightTaillight);
+
+            // License plate
+            const plateGeometry = new THREE.PlaneGeometry(0.8, 0.3);
+            const plateMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            const licensePlate = new THREE.Mesh(plateGeometry, plateMaterial);
+            licensePlate.position.set(0, 0.4, -2.15);
+            group.add(licensePlate);
+
+            // Bumpers
+            const bumperGeometry = new THREE.BoxGeometry(1.9, 0.2, 0.2);
+            const bumperMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+            const frontBumper = new THREE.Mesh(bumperGeometry, bumperMaterial);
+            frontBumper.position.set(0, 0.15, 2.2);
+            group.add(frontBumper);
+            const rearBumper = new THREE.Mesh(bumperGeometry, bumperMaterial);
+            rearBumper.position.set(0, 0.15, -2.2);
+            group.add(rearBumper);
+
+            // Mirrors
+            const mirrorGeometry = new THREE.BoxGeometry(0.1, 0.08, 0.08);
+            const mirrorMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+            const leftMirror = new THREE.Mesh(mirrorGeometry, mirrorMaterial);
+            leftMirror.position.set(-0.95, 1.1, 0.8);
+            group.add(leftMirror);
+            const rightMirror = new THREE.Mesh(mirrorGeometry, mirrorMaterial);
+            rightMirror.position.set(0.95, 1.1, 0.8);
+            group.add(rightMirror);
+
+            // Antenna (some vehicles)
+            if (Math.random() > 0.7) {
+                const antennaGeometry = new THREE.CylinderGeometry(0.01, 0.01, 0.8);
+                const antennaMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+                const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+                antenna.position.set(0.7, 1.4, -0.5);
+                group.add(antenna);
+            }
+
+            group.position.set((data.x - 600) / 20, 0, (data.y - 411.5) / 20);
+            group.userData = { id: data.id, type: 'vehicle' };
+            group.castShadow = true;
+            scene.add(group);
+            
+            return group;
+        }
+
+        function updateTrafficLights(trafficData) {
+            const vehicleState = trafficData.vehicle || 'RED';
+            const pedestrianState = trafficData.pedestrian || 'DONT_WALK';
+            
+            trafficLights.forEach(light => {
+                const lightType = light.userData.type;
+                const lightName = light.name;
+
+                if (lightName.includes('traffic_light_')) { // Vehicle lights
+                    const color = lightName.split('_')[2]; // e.g., 'red', 'green'
+                    if (color.toUpperCase() === vehicleState) {
+                        light.material.emissive.setHex(light.material.color.getHex());
+                        light.material.opacity = 1.0;
+                        if (light.userData.glowLight) light.userData.glowLight.intensity = 0.5;
+                    } else {
+                        light.material.emissive.setHex(0x000000);
+                        light.material.opacity = 0.3;
+                        if (light.userData.glowLight) light.userData.glowLight.intensity = 0;
+                    }
+                } else if (lightName.includes('pedestrian_light_')) { // Pedestrian lights
+                    const pedLightType = lightName.split('_')[2]; // 'walk' or 'dontwalk'
+                    if (pedLightType.toUpperCase() === pedestrianState) {
+                        light.material.color.setHex(pedLightType === 'walk' ? 0x00ff00 : 0xff0000);
+                        light.material.emissive.setHex(pedLightType === 'walk' ? 0x002200 : 0x220000);
+                        light.material.opacity = 1.0;
+                    } else {
+                        light.material.color.setHex(0x333333); // Dim color when off
+                        light.material.emissive.setHex(0x000000);
+                        light.material.opacity = 0.3;
+                    }
+                }
+            });
+        }
+
+        function updateSimulation() {
+            fetch('/api/traffic_data')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('收到仿真数据:', data);
+                    
+                    // Update main traffic light status
+                    document.getElementById('traffic-lights').innerHTML = 
+                        `🚦 <strong>交通灯状态</strong><br>` +
+                        `车辆信号: <span style="background-color: ${data.traffic_lights?.vehicle === 'GREEN' ? '#4CAF50' : '#FF0000'}; color: white; padding: 2px 5px; border-radius: 3px;">${data.traffic_lights?.vehicle || 'RED'}</span><br>` +
+                        `行人信号: <span style="background-color: ${data.traffic_lights?.pedestrian === 'WALK' ? '#4CAF50' : '#FF0000'}; color: white; padding: 2px 5px; border-radius: 3px;">${data.traffic_lights?.pedestrian || 'DONT_WALK'}</span>`;
+                    
+                    const pedCount = data.pedestrians?.length || 0;
+                    let pedDetails = `🚶 <strong>行人检测</strong><br>检测到: <span style="font-weight: bold; color: #4CAF50;">${pedCount}名行人</span><br>`;
+                    if (data.pedestrians && data.pedestrians.length > 0) {
+                        data.pedestrians.forEach((ped, index) => {
+                            const intentClass = ped.intent_prob > 0.7 ? 'high-intent' : 
+                                              ped.intent_prob > 0.4 ? 'medium-intent' : 'low-intent';
+                            pedDetails += `<span class="${intentClass}">📍 ${ped.id}: (${ped.x.toFixed(0)}, ${ped.y.toFixed(0)}) 意图${(ped.intent_prob * 100).toFixed(0)}%, 状态: ${ped.is_crossing ? 'crossing' : 'waiting'}</span><br>`;
+                            if (index >= 3 && data.pedestrians.length > 4) {
+                                pedDetails += `... and ${data.pedestrians.length - 4} more<br>`;
+                                return false;
+                            }
+                        });
+                    } else {
+                        pedDetails += '没有行人被检测到<br>';
+                    }
+                    document.getElementById('selected-pedestrian').innerHTML = pedDetails;
+
+                    let vehicleDetailsHtml = `🚗 <strong>车辆状态</strong><br>活跃车辆: <span style="font-weight: bold; color: #4CAF50;">${data.vehicles?.length || 0}辆</span><br>`;
+                    if (data.vehicles && data.vehicles.length > 0) {
+                        data.vehicles.forEach((veh, index) => {
+                            vehicleDetailsHtml += `🚗 ${veh.id}: (${veh.x.toFixed(0)}, ${veh.y.toFixed(0)}) 速度${veh.speed.toFixed(0)}m/s<br>`;
+                        });
+                    } else {
+                        vehicleDetailsHtml += '没有车辆活跃<br>';
+                    }
+                    document.getElementById('vehicle-count').innerHTML = vehicleDetailsHtml;
+
+                    // Update AI Decisions panel
+                    let aiDecisionsHtml = `🤖 <strong>Edge AI 决策</strong><br>`;
+                    if (data.ai_decisions) {
+                        const ai = data.ai_decisions;
+                        aiDecisionsHtml += `系统状态: <span style="color: ${ai.system_status === 'active' ? '#4CAF50' : '#FF0000'};">${ai.system_status === 'active' ? '运行中' : '错误'}</span><br>`;
+                        aiDecisionsHtml += `Edge处理: <span style="color: ${ai.edge_processing ? '#4CAF50' : '#FF0000'};">${ai.edge_processing ? '启用' : '禁用'}</span><br>`;
+                        aiDecisionsHtml += `总行人数: <span style="font-weight: bold;">${ai.total_pedestrians || 0}</span><br>`;
+                        aiDecisionsHtml += `可穿戴连接: <span style="color: #4CAF50; font-weight: bold;">${ai.wearable_connected || 0}</span><br>`;
+                        aiDecisionsHtml += `高优先级: <span style="color: #FF5722; font-weight: bold;">${ai.high_priority_count || 0}</span><br>`;
+                        aiDecisionsHtml += `中优先级: <span style="color: #FF9800; font-weight: bold;">${ai.medium_priority_count || 0}</span><br>`;
+                    } else {
+                        aiDecisionsHtml += '<span style="color: red;">AI数据不可用</span><br>';
+                    }
+                    document.getElementById('ai-decisions').innerHTML = aiDecisionsHtml;
+
+                    // Update RSU Data panel
+                    let rsuDataHtml = `📡 <strong>RSU 传感器</strong><br>`;
+                    if (data.ai_decisions && data.ai_decisions.rsu_detections !== undefined) {
+                        rsuDataHtml += `检测数量: <span style="font-weight: bold; color: #4CAF50;">${data.ai_decisions.rsu_detections}</span><br>`;
+                        rsuDataHtml += `活跃扫描器: <span style="color: #2196F3;">4个</span><br>`;
+                        
+                        // Show pedestrian priorities
+                        if (data.pedestrians && data.pedestrians.length > 0) {
+                            const priorityCounts = data.pedestrians.reduce((acc, ped) => {
+                                acc[ped.priority] = (acc[ped.priority] || 0) + 1;
+                                return acc;
+                            }, {});
+                            
+                            rsuDataHtml += `优先级分析:<br>`;
+                            if (priorityCounts.high) rsuDataHtml += `• 高: <span style="color: #FF5722; font-weight: bold;">${priorityCounts.high}</span><br>`;
+                            if (priorityCounts.medium) rsuDataHtml += `• 中: <span style="color: #FF9800; font-weight: bold;">${priorityCounts.medium}</span><br>`;
+                            if (priorityCounts.normal) rsuDataHtml += `• 普通: <span style="color: #4CAF50; font-weight: bold;">${priorityCounts.normal}</span><br>`;
+                        }
+                        
+                        // Show anomaly detection
+                        const anomalies = data.pedestrians ? data.pedestrians.filter(p => p.anomaly).length : 0;
+                        rsuDataHtml += `异常检测: <span style="color: ${anomalies > 0 ? '#FF0000' : '#4CAF50'}; font-weight: bold;">${anomalies}个</span><br>`;
+                    } else {
+                        rsuDataHtml += '<span style="color: red;">RSU数据不可用</span><br>';
+                    }
+                    document.getElementById('rsu-data').innerHTML = rsuDataHtml;
+
+                    // Update traffic lights with RSU data
+                    if (data.traffic_lights) {
+                        updateTrafficLights(data.traffic_lights);
+                    }
+
+                    // Remove old pedestrians
+                    pedestrians.forEach(ped => scene.remove(ped));
+                    pedestrians = [];
+
+                    // Add new pedestrians with RSU/wearable data
+                    if (data.pedestrians) {
+                        data.pedestrians.forEach(pedData => {
+                            pedestrians.push(createPedestrian(pedData));
+                        });
+                    }
+
+                    // Remove old vehicles
+                    vehicles.forEach(veh => scene.remove(veh));
+                    vehicles = [];
+
+                    // Add new vehicles
+                    if (data.vehicles) {
+                        data.vehicles.forEach(vehData => {
+                            vehicles.push(createVehicle(vehData));
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log('Data fetch error:', err);
+                    document.getElementById('traffic-lights').innerHTML = 
+                        `🚦 <strong>交通灯状态:</strong> <span style="color: red;">连接失败</span><br>`;
+                    document.getElementById('selected-pedestrian').innerHTML = 
+                        `🚶 <strong>行人检测:</strong> <span style="color: red;">数据错误</span><br>`;
+                    document.getElementById('vehicle-count').innerHTML = 
+                        `🚗 <strong>车辆状态:</strong> <span style="color: red;">数据错误</span><br>`;
+                });
+        }
+
+        // 自动生成行人功能
+        function generatePedestrians() {
+            console.log('正在生成新行人...');
+            fetch('/api/generate_pedestrians', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('生成行人响应:', data);
+                    // 立即更新仿真以显示新行人
+                    updateSimulation();
+                })
+                .catch(error => console.error('生成行人时出错:', error));
+        }
+
+        // 改进的按钮功能
+        function triggerPedestrianCrossing() {
+            console.log('触发行人过街...');
+            fetch('/api/pedestrian_cross', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('行人过街响应:', data);
+                    // 添加视觉反馈
+                    const button = document.getElementById('pedestrian-cross-button');
+                    if (button) {
+                        button.style.backgroundColor = '#4CAF50';
+                        button.innerHTML = '✅ 已触发过街';
+                        setTimeout(() => {
+                            button.style.backgroundColor = '#2196F3';
+                            button.innerHTML = '🚶 行人过街按钮';
+                        }, 2000);
+                    }
+                })
+                .catch(error => {
+                    console.error('触发行人过街时出错:', error);
+                    const button = document.getElementById('pedestrian-cross-button');
+                    if (button) {
+                        button.style.backgroundColor = '#FF5722';
+                        button.innerHTML = '❌ 触发失败';
+                        setTimeout(() => {
+                            button.style.backgroundColor = '#2196F3';
+                            button.innerHTML = '🚶 行人过街按钮';
+                        }, 2000);
+                    }
+                });
+        }
+
+        // Main initialization function
+        function initApp() {
+            console.log('启动 PI-BREPSC 3D 仿真系统...');
+            
+            // 初始化 Three.js
+            if (!initThreeJS()) {
+                console.error('Three.js 初始化失败');
+                return;
+            }
+            
+            // 初始化场景
+            initScene();
+            
+            // 创建环境
+            createEnvironment();
+            createTrafficLights();
+            createRSUSensors();
+            
+            // 设置相机位置
+            camera.position.set(30, 40, 30);
+            camera.lookAt(0, 0, 0);
+            controls.update();
+            
+            console.log('场景创建成功');
+            
+            // 开始动画循环
+            animate();
+            
+            // 开始数据更新
+            updateSimulation();
+            setInterval(updateSimulation, 1000); // 每秒更新一次
+            
+            // 自动生成行人 - 每30秒生成一次
+            setInterval(generatePedestrians, 30000);
+            
+            console.log('仿真系统启动完成，包含自动行人生成功能');
+        }
+
+        // 按钮事件监听器
+        document.addEventListener('DOMContentLoaded', () => {
+            const pedestrianCrossButton = document.getElementById('pedestrian-cross-button');
+            if (pedestrianCrossButton) {
+                pedestrianCrossButton.addEventListener('click', triggerPedestrianCrossing);
+            }
+
+            const resetViewButton = document.getElementById('reset-view-button');
+            if (resetViewButton) {
+                resetViewButton.addEventListener('click', () => {
+                    console.log('重置视角按钮被点击!');
+                    if (camera && controls) {
+                        camera.position.set(30, 40, 30);
+                        camera.lookAt(0, 0, 0);
+                        controls.target.set(0, 0, 0);
+                        controls.update();
+            }
+        });
+            }
+
+            // 添加生成行人按钮事件
+            const generatePedButton = document.getElementById('generate-pedestrians-button');
+            if (generatePedButton) {
+                generatePedButton.addEventListener('click', () => {
+                    generatePedestrians();
+                    // 视觉反馈
+                    generatePedButton.style.backgroundColor = '#4CAF50';
+                    generatePedButton.innerHTML = '✅ 已生成行人';
+                    setTimeout(() => {
+                        generatePedButton.style.backgroundColor = '#FF9800';
+                        generatePedButton.innerHTML = '👥 生成更多行人';
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
