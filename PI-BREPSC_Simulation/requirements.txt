@@ -1,0 +1,4 @@
+pyvista>=0.42.0
+vtk>=9.0.0
+# For 3D visualization and mesh operations
+meshio>=5.0.0 
