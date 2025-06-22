@@ -1,0 +1,15 @@
+PI-BREPSC Wearable App - Mock APK File
+Version: 1.0.0
+Package: com.brepsc.wearable
+Target SDK: Android 7.0+ (API 24)
+Supports: Phone + Watch
+Features: 🚦过马路请求 📱蓝牙通信 🔍安全监控 ⚙️设置
+
+This is a mock APK file. To generate the actual APK:
+1. Install Android Studio with SDK
+2. Open PI-BREPSC_WearableSDK project  
+3. Run: ./gradlew :wear:assembleRelease
+
+Real APK size: ~2-5MB
+Based on PI-BREPSC simulation system
+Ready for installation on Android devices 

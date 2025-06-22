@@ -1,0 +1,2249 @@
+{
+  "timestamp": 1750242467.268238,
+  "traffic_lights": {
+    "vehicle": "RED",
+    "pedestrian": "FLASH"
+  },
+  "pedestrians": [
+    {
+      "id": "P1",
+      "x": 644.3288466962944,
+      "y": 408.48906537869084,
+      "intent_prob": 0.1,
+      "is_crossing": true,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "P2",
+      "x": 642.9719024729824,
+      "y": 365.6254001953619,
+      "intent_prob": 0.1,
+      "is_crossing": true,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "P3",
+      "x": 555.5641704261021,
+      "y": 379.4696885410296,
+      "intent_prob": 0.1,
+      "is_crossing": true,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "P4",
+      "x": 668.0,
+      "y": 324.0,
+      "intent_prob": 0.1,
+      "is_crossing": true,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "P5",
+      "x": 641.4117271718336,
+      "y": 386.90302124320584,
+      "intent_prob": 0.1,
+      "is_crossing": true,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750237310_0",
+      "x": 627,
+      "y": 351,
+      "intent_prob": 0.4436248910933914,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750237310_1",
+      "x": 562,
+      "y": 366,
+      "intent_prob": 0.687570309965395,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238387_0",
+      "x": 591,
+      "y": 355,
+      "intent_prob": 0.3478652328502234,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238387_1",
+      "x": 646,
+      "y": 354,
+      "intent_prob": 0.4194312022322809,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238387_2",
+      "x": 559,
+      "y": 368,
+      "intent_prob": 0.33422954390915266,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238387_3",
+      "x": 606,
+      "y": 460,
+      "intent_prob": 0.41896413533187044,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238417_0",
+      "x": 592,
+      "y": 443,
+      "intent_prob": 0.6037165804318905,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238417_1",
+      "x": 564,
+      "y": 428,
+      "intent_prob": 0.7050239756558505,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238447_0",
+      "x": 648,
+      "y": 449,
+      "intent_prob": 0.6877091511451578,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238447_1",
+      "x": 619,
+      "y": 453,
+      "intent_prob": 0.33572038922072384,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238447_2",
+      "x": 580,
+      "y": 428,
+      "intent_prob": 0.3557903004782168,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238447_3",
+      "x": 589,
+      "y": 378,
+      "intent_prob": 0.45211128152069574,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238447_4",
+      "x": 557,
+      "y": 361,
+      "intent_prob": 0.5599392539022283,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238477_0",
+      "x": 611,
+      "y": 386,
+      "intent_prob": 0.8745310623327782,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238477_1",
+      "x": 579,
+      "y": 380,
+      "intent_prob": 0.7138846314298078,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238477_2",
+      "x": 596,
+      "y": 412,
+      "intent_prob": 0.39847055002563836,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238507_0",
+      "x": 579,
+      "y": 352,
+      "intent_prob": 0.6289544719013455,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238507_1",
+      "x": 569,
+      "y": 407,
+      "intent_prob": 0.6150793157696248,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238507_2",
+      "x": 571,
+      "y": 411,
+      "intent_prob": 0.35747836075582634,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238507_3",
+      "x": 645,
+      "y": 420,
+      "intent_prob": 0.4805948766214249,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238537_0",
+      "x": 628,
+      "y": 429,
+      "intent_prob": 0.5793237439390402,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238537_1",
+      "x": 639,
+      "y": 460,
+      "intent_prob": 0.45971306332696904,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238537_2",
+      "x": 650,
+      "y": 375,
+      "intent_prob": 0.41457341419811444,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238537_3",
+      "x": 617,
+      "y": 420,
+      "intent_prob": 0.6219377730457119,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238537_4",
+      "x": 650,
+      "y": 460,
+      "intent_prob": 0.4355175472324945,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238613_0",
+      "x": 636,
+      "y": 436,
+      "intent_prob": 0.8514487782445228,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238613_1",
+      "x": 637,
+      "y": 361,
+      "intent_prob": 0.7477447726700011,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238613_2",
+      "x": 576,
+      "y": 396,
+      "intent_prob": 0.4196974381738419,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238613_3",
+      "x": 583,
+      "y": 430,
+      "intent_prob": 0.5137152109806646,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238613_4",
+      "x": 566,
+      "y": 354,
+      "intent_prob": 0.5170121549627129,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238673_0",
+      "x": 623,
+      "y": 399,
+      "intent_prob": 0.6295459107601158,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238673_1",
+      "x": 558,
+      "y": 447,
+      "intent_prob": 0.5384209139726879,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238733_0",
+      "x": 583,
+      "y": 376,
+      "intent_prob": 0.38186349261174485,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238733_1",
+      "x": 621,
+      "y": 466,
+      "intent_prob": 0.5380952274426282,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238733_2",
+      "x": 617,
+      "y": 378,
+      "intent_prob": 0.30528872359089665,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238793_0",
+      "x": 570,
+      "y": 453,
+      "intent_prob": 0.32330461847798436,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238793_1",
+      "x": 564,
+      "y": 436,
+      "intent_prob": 0.835783266326326,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238853_0",
+      "x": 614,
+      "y": 459,
+      "intent_prob": 0.707145919635213,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238853_1",
+      "x": 602,
+      "y": 379,
+      "intent_prob": 0.4488601705198724,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238913_0",
+      "x": 564,
+      "y": 390,
+      "intent_prob": 0.7896281814163266,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238913_1",
+      "x": 646,
+      "y": 460,
+      "intent_prob": 0.31069959317235246,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238913_2",
+      "x": 559,
+      "y": 406,
+      "intent_prob": 0.5953482212802444,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238913_3",
+      "x": 603,
+      "y": 469,
+      "intent_prob": 0.8991672076850183,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238913_4",
+      "x": 635,
+      "y": 381,
+      "intent_prob": 0.3545103643264148,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750238973_0",
+      "x": 650,
+      "y": 403,
+      "intent_prob": 0.3940653936239157,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750238973_1",
+      "x": 579,
+      "y": 460,
+      "intent_prob": 0.534702867384766,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750238973_2",
+      "x": 569,
+      "y": 431,
+      "intent_prob": 0.8833848460510636,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239033_0",
+      "x": 621,
+      "y": 392,
+      "intent_prob": 0.5921040097258059,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239033_1",
+      "x": 621,
+      "y": 470,
+      "intent_prob": 0.5234787753106983,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239033_2",
+      "x": 585,
+      "y": 383,
+      "intent_prob": 0.6664809079932286,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239033_3",
+      "x": 554,
+      "y": 411,
+      "intent_prob": 0.4002169924879976,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239033_4",
+      "x": 644,
+      "y": 426,
+      "intent_prob": 0.4850340465035291,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239093_0",
+      "x": 594,
+      "y": 357,
+      "intent_prob": 0.36633727188401255,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239093_1",
+      "x": 635,
+      "y": 456,
+      "intent_prob": 0.4131649859421336,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239093_2",
+      "x": 615,
+      "y": 430,
+      "intent_prob": 0.7243610111238319,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239093_3",
+      "x": 592,
+      "y": 447,
+      "intent_prob": 0.8499827426192319,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239153_0",
+      "x": 617,
+      "y": 392,
+      "intent_prob": 0.4331838340888857,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239153_1",
+      "x": 592,
+      "y": 455,
+      "intent_prob": 0.6054215308955171,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239153_2",
+      "x": 631,
+      "y": 420,
+      "intent_prob": 0.6787487425637092,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239213_0",
+      "x": 612,
+      "y": 379,
+      "intent_prob": 0.34421806653991527,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239213_1",
+      "x": 636,
+      "y": 382,
+      "intent_prob": 0.5414385737068731,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239213_2",
+      "x": 595,
+      "y": 446,
+      "intent_prob": 0.3888181845131661,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239273_0",
+      "x": 606,
+      "y": 430,
+      "intent_prob": 0.8467926968688053,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239273_1",
+      "x": 636,
+      "y": 410,
+      "intent_prob": 0.5673329005359256,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239273_2",
+      "x": 622,
+      "y": 387,
+      "intent_prob": 0.7618527208018113,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239273_3",
+      "x": 628,
+      "y": 371,
+      "intent_prob": 0.33764223813751176,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239333_0",
+      "x": 628,
+      "y": 466,
+      "intent_prob": 0.38767575246784175,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239333_1",
+      "x": 591,
+      "y": 465,
+      "intent_prob": 0.5160954614073465,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239393_0",
+      "x": 568,
+      "y": 378,
+      "intent_prob": 0.5587776340424833,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239393_1",
+      "x": 597,
+      "y": 431,
+      "intent_prob": 0.8076565663522215,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239393_2",
+      "x": 629,
+      "y": 465,
+      "intent_prob": 0.7357423761188853,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239393_3",
+      "x": 641,
+      "y": 453,
+      "intent_prob": 0.8585347064416935,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239393_4",
+      "x": 621,
+      "y": 380,
+      "intent_prob": 0.4424325882954059,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239453_0",
+      "x": 555,
+      "y": 442,
+      "intent_prob": 0.5745323034416514,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239453_1",
+      "x": 580,
+      "y": 417,
+      "intent_prob": 0.32073897704989457,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239513_0",
+      "x": 575,
+      "y": 408,
+      "intent_prob": 0.45271648276747445,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239513_1",
+      "x": 601,
+      "y": 376,
+      "intent_prob": 0.47040945609988755,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239513_2",
+      "x": 564,
+      "y": 383,
+      "intent_prob": 0.30102711858273873,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239513_3",
+      "x": 639,
+      "y": 417,
+      "intent_prob": 0.7187565847147228,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239513_4",
+      "x": 634,
+      "y": 461,
+      "intent_prob": 0.4376555252406873,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239573_0",
+      "x": 568,
+      "y": 423,
+      "intent_prob": 0.31466224427851014,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239573_1",
+      "x": 552,
+      "y": 355,
+      "intent_prob": 0.48440364731726376,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239573_2",
+      "x": 572,
+      "y": 469,
+      "intent_prob": 0.7229313137686884,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239573_3",
+      "x": 650,
+      "y": 399,
+      "intent_prob": 0.30460620006425787,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239633_0",
+      "x": 637,
+      "y": 459,
+      "intent_prob": 0.6723787844309428,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239633_1",
+      "x": 617,
+      "y": 408,
+      "intent_prob": 0.7407595740152051,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239693_0",
+      "x": 646,
+      "y": 449,
+      "intent_prob": 0.34974893525254386,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239693_1",
+      "x": 550,
+      "y": 355,
+      "intent_prob": 0.7268702549373514,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239693_2",
+      "x": 557,
+      "y": 456,
+      "intent_prob": 0.6981859955930161,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239753_0",
+      "x": 618,
+      "y": 432,
+      "intent_prob": 0.6097863679903679,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239753_1",
+      "x": 646,
+      "y": 448,
+      "intent_prob": 0.7789641305436219,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239753_2",
+      "x": 638,
+      "y": 418,
+      "intent_prob": 0.7505065904445127,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239753_3",
+      "x": 618,
+      "y": 425,
+      "intent_prob": 0.82336240543628,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239813_0",
+      "x": 589,
+      "y": 452,
+      "intent_prob": 0.724380424438485,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239813_1",
+      "x": 642,
+      "y": 407,
+      "intent_prob": 0.5581211874360114,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239873_0",
+      "x": 614,
+      "y": 408,
+      "intent_prob": 0.6485059137193112,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239873_1",
+      "x": 635,
+      "y": 426,
+      "intent_prob": 0.8515455957166078,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239873_2",
+      "x": 581,
+      "y": 457,
+      "intent_prob": 0.6972382101515497,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239873_3",
+      "x": 619,
+      "y": 399,
+      "intent_prob": 0.7574990066133782,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239873_4",
+      "x": 598,
+      "y": 427,
+      "intent_prob": 0.5017530636059747,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239933_0",
+      "x": 642,
+      "y": 446,
+      "intent_prob": 0.364572443358626,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750239933_1",
+      "x": 586,
+      "y": 427,
+      "intent_prob": 0.6878287644282643,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239933_2",
+      "x": 590,
+      "y": 401,
+      "intent_prob": 0.44463516437467987,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239933_3",
+      "x": 606,
+      "y": 379,
+      "intent_prob": 0.8923800168091638,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239933_4",
+      "x": 626,
+      "y": 439,
+      "intent_prob": 0.3718220750128664,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750239993_0",
+      "x": 601,
+      "y": 364,
+      "intent_prob": 0.8308030403125115,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239993_1",
+      "x": 647,
+      "y": 468,
+      "intent_prob": 0.6782342400718453,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239993_2",
+      "x": 605,
+      "y": 363,
+      "intent_prob": 0.5417416992573092,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750239993_3",
+      "x": 580,
+      "y": 466,
+      "intent_prob": 0.3691551954163688,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240053_0",
+      "x": 599,
+      "y": 421,
+      "intent_prob": 0.47141765354321424,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240053_1",
+      "x": 630,
+      "y": 356,
+      "intent_prob": 0.5730519509329471,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240053_2",
+      "x": 622,
+      "y": 360,
+      "intent_prob": 0.8360307909092666,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240113_0",
+      "x": 566,
+      "y": 419,
+      "intent_prob": 0.40444885579480155,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240113_1",
+      "x": 592,
+      "y": 430,
+      "intent_prob": 0.753550521977904,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240113_2",
+      "x": 571,
+      "y": 450,
+      "intent_prob": 0.4579613616652479,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240173_0",
+      "x": 649,
+      "y": 398,
+      "intent_prob": 0.726118695909546,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240173_1",
+      "x": 637,
+      "y": 444,
+      "intent_prob": 0.7128470892965795,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240233_0",
+      "x": 560,
+      "y": 367,
+      "intent_prob": 0.7814910448442979,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240233_1",
+      "x": 623,
+      "y": 445,
+      "intent_prob": 0.6139796345616146,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240293_0",
+      "x": 631,
+      "y": 356,
+      "intent_prob": 0.752131953300593,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240293_1",
+      "x": 611,
+      "y": 356,
+      "intent_prob": 0.6741168455904134,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240293_2",
+      "x": 555,
+      "y": 425,
+      "intent_prob": 0.5958684537887966,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240293_3",
+      "x": 569,
+      "y": 370,
+      "intent_prob": 0.7389037283388844,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240293_4",
+      "x": 627,
+      "y": 377,
+      "intent_prob": 0.7278483702678109,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240353_0",
+      "x": 587,
+      "y": 427,
+      "intent_prob": 0.5718884226957143,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240353_1",
+      "x": 605,
+      "y": 383,
+      "intent_prob": 0.4618088067289057,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240353_2",
+      "x": 603,
+      "y": 454,
+      "intent_prob": 0.8776184411337093,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240353_3",
+      "x": 551,
+      "y": 408,
+      "intent_prob": 0.3505154435098023,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240353_4",
+      "x": 603,
+      "y": 430,
+      "intent_prob": 0.3823449280067227,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240413_0",
+      "x": 648,
+      "y": 389,
+      "intent_prob": 0.728410986719847,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240413_1",
+      "x": 623,
+      "y": 406,
+      "intent_prob": 0.5344546689495984,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240413_2",
+      "x": 640,
+      "y": 450,
+      "intent_prob": 0.583864364578256,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240413_3",
+      "x": 635,
+      "y": 417,
+      "intent_prob": 0.8205741811281,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240413_4",
+      "x": 608,
+      "y": 388,
+      "intent_prob": 0.48361850624598246,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240473_0",
+      "x": 609,
+      "y": 466,
+      "intent_prob": 0.8643092541990187,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240473_1",
+      "x": 621,
+      "y": 432,
+      "intent_prob": 0.5588434279481098,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240533_0",
+      "x": 566,
+      "y": 375,
+      "intent_prob": 0.898994650831233,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240533_1",
+      "x": 644,
+      "y": 455,
+      "intent_prob": 0.4221408495603179,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240533_2",
+      "x": 593,
+      "y": 357,
+      "intent_prob": 0.34170724803686475,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240533_3",
+      "x": 576,
+      "y": 401,
+      "intent_prob": 0.7447804284078414,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240593_0",
+      "x": 585,
+      "y": 375,
+      "intent_prob": 0.6558322711005178,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240593_1",
+      "x": 570,
+      "y": 464,
+      "intent_prob": 0.5155399996841397,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240593_2",
+      "x": 629,
+      "y": 406,
+      "intent_prob": 0.7606589600105829,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240593_3",
+      "x": 593,
+      "y": 392,
+      "intent_prob": 0.6861497294646077,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240653_0",
+      "x": 582,
+      "y": 393,
+      "intent_prob": 0.373530365487149,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240653_1",
+      "x": 574,
+      "y": 377,
+      "intent_prob": 0.865344321008515,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240653_2",
+      "x": 594,
+      "y": 373,
+      "intent_prob": 0.3051690031671469,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240653_3",
+      "x": 648,
+      "y": 425,
+      "intent_prob": 0.8352624391866001,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240713_0",
+      "x": 582,
+      "y": 443,
+      "intent_prob": 0.5874463411970205,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240713_1",
+      "x": 583,
+      "y": 465,
+      "intent_prob": 0.5733537510212825,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240713_2",
+      "x": 578,
+      "y": 403,
+      "intent_prob": 0.37464443861859903,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240713_3",
+      "x": 632,
+      "y": 403,
+      "intent_prob": 0.8349946388418763,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240773_0",
+      "x": 573,
+      "y": 453,
+      "intent_prob": 0.61448961857028,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240773_1",
+      "x": 606,
+      "y": 369,
+      "intent_prob": 0.6852478493816981,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240833_0",
+      "x": 550,
+      "y": 459,
+      "intent_prob": 0.8976078741902951,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240833_1",
+      "x": 641,
+      "y": 446,
+      "intent_prob": 0.32438275974473024,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240893_0",
+      "x": 552,
+      "y": 379,
+      "intent_prob": 0.7962366408793988,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240893_1",
+      "x": 557,
+      "y": 436,
+      "intent_prob": 0.8453920507592099,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240893_2",
+      "x": 645,
+      "y": 427,
+      "intent_prob": 0.4371113735063067,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750240893_3",
+      "x": 603,
+      "y": 433,
+      "intent_prob": 0.7379085743581839,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750240953_0",
+      "x": 603,
+      "y": 350,
+      "intent_prob": 0.39120127088310563,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750240953_1",
+      "x": 629,
+      "y": 439,
+      "intent_prob": 0.41156135116023485,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241013_0",
+      "x": 567,
+      "y": 450,
+      "intent_prob": 0.8655583743863182,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241013_1",
+      "x": 609,
+      "y": 429,
+      "intent_prob": 0.6466759514143019,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241013_2",
+      "x": 567,
+      "y": 367,
+      "intent_prob": 0.40509773300163604,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241073_0",
+      "x": 575,
+      "y": 375,
+      "intent_prob": 0.5558282673785901,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241073_1",
+      "x": 645,
+      "y": 399,
+      "intent_prob": 0.5903901207076516,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241133_0",
+      "x": 639,
+      "y": 417,
+      "intent_prob": 0.6658952957886912,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241133_1",
+      "x": 570,
+      "y": 393,
+      "intent_prob": 0.3096014285709142,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241133_2",
+      "x": 589,
+      "y": 393,
+      "intent_prob": 0.43332460937446576,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241133_3",
+      "x": 604,
+      "y": 443,
+      "intent_prob": 0.8865299654366816,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241193_0",
+      "x": 630,
+      "y": 447,
+      "intent_prob": 0.7077015241722967,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241193_1",
+      "x": 569,
+      "y": 461,
+      "intent_prob": 0.683309430072056,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241193_2",
+      "x": 556,
+      "y": 393,
+      "intent_prob": 0.35796224772507057,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241253_0",
+      "x": 629,
+      "y": 351,
+      "intent_prob": 0.6958509306425384,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241253_1",
+      "x": 571,
+      "y": 460,
+      "intent_prob": 0.5141125476410652,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241253_2",
+      "x": 560,
+      "y": 385,
+      "intent_prob": 0.7492210468927711,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241313_0",
+      "x": 594,
+      "y": 416,
+      "intent_prob": 0.39285700463604334,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241313_1",
+      "x": 632,
+      "y": 368,
+      "intent_prob": 0.37369056484288576,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241313_2",
+      "x": 553,
+      "y": 385,
+      "intent_prob": 0.823061052481616,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241313_3",
+      "x": 578,
+      "y": 378,
+      "intent_prob": 0.8353724328345937,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241373_0",
+      "x": 629,
+      "y": 404,
+      "intent_prob": 0.753116411264122,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241373_1",
+      "x": 551,
+      "y": 466,
+      "intent_prob": 0.39564651162517445,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241373_2",
+      "x": 589,
+      "y": 401,
+      "intent_prob": 0.6937334297316426,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241433_0",
+      "x": 650,
+      "y": 357,
+      "intent_prob": 0.5398644975831894,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241433_1",
+      "x": 637,
+      "y": 375,
+      "intent_prob": 0.6091553177701812,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241433_2",
+      "x": 573,
+      "y": 416,
+      "intent_prob": 0.7004826282891258,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241493_0",
+      "x": 571,
+      "y": 468,
+      "intent_prob": 0.8820808964658786,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241493_1",
+      "x": 557,
+      "y": 455,
+      "intent_prob": 0.35932448662761884,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241493_2",
+      "x": 601,
+      "y": 369,
+      "intent_prob": 0.6365779326027887,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241553_0",
+      "x": 604,
+      "y": 367,
+      "intent_prob": 0.6117927960226666,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241553_1",
+      "x": 575,
+      "y": 354,
+      "intent_prob": 0.7655976949750269,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241553_2",
+      "x": 553,
+      "y": 421,
+      "intent_prob": 0.6213050483546904,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241613_0",
+      "x": 613,
+      "y": 428,
+      "intent_prob": 0.5096291995810017,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241613_1",
+      "x": 611,
+      "y": 447,
+      "intent_prob": 0.7237325930302985,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241673_0",
+      "x": 609,
+      "y": 451,
+      "intent_prob": 0.4115189443350146,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241673_1",
+      "x": 574,
+      "y": 438,
+      "intent_prob": 0.4312509561967715,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241733_0",
+      "x": 555,
+      "y": 441,
+      "intent_prob": 0.6821999998731123,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241733_1",
+      "x": 561,
+      "y": 427,
+      "intent_prob": 0.5572157699634902,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241733_2",
+      "x": 573,
+      "y": 374,
+      "intent_prob": 0.6652799682326269,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241733_3",
+      "x": 636,
+      "y": 436,
+      "intent_prob": 0.3531695616638778,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241793_0",
+      "x": 552,
+      "y": 397,
+      "intent_prob": 0.49894020799339245,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241793_1",
+      "x": 620,
+      "y": 468,
+      "intent_prob": 0.8197845543876316,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241853_0",
+      "x": 550,
+      "y": 407,
+      "intent_prob": 0.30536864223362176,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241853_1",
+      "x": 602,
+      "y": 366,
+      "intent_prob": 0.8184946963697426,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241853_2",
+      "x": 605,
+      "y": 390,
+      "intent_prob": 0.5440191798063343,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241853_3",
+      "x": 635,
+      "y": 412,
+      "intent_prob": 0.5162881299127616,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241913_0",
+      "x": 606,
+      "y": 452,
+      "intent_prob": 0.7016715114842752,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241913_1",
+      "x": 574,
+      "y": 445,
+      "intent_prob": 0.833293194762021,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750241913_2",
+      "x": 573,
+      "y": 387,
+      "intent_prob": 0.7440708914840654,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241973_0",
+      "x": 586,
+      "y": 388,
+      "intent_prob": 0.6918711710652188,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750241973_1",
+      "x": 595,
+      "y": 424,
+      "intent_prob": 0.5726291293340608,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750241973_2",
+      "x": 557,
+      "y": 436,
+      "intent_prob": 0.7155898889180548,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242033_0",
+      "x": 616,
+      "y": 423,
+      "intent_prob": 0.6275306297097112,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242033_1",
+      "x": 613,
+      "y": 449,
+      "intent_prob": 0.3165325543799242,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242093_0",
+      "x": 582,
+      "y": 375,
+      "intent_prob": 0.4402664253389008,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242093_1",
+      "x": 619,
+      "y": 463,
+      "intent_prob": 0.8395818670840429,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242153_0",
+      "x": 611,
+      "y": 402,
+      "intent_prob": 0.6142713658781213,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242153_1",
+      "x": 586,
+      "y": 458,
+      "intent_prob": 0.36590045529407944,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242153_2",
+      "x": 596,
+      "y": 376,
+      "intent_prob": 0.3581538033522063,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242153_3",
+      "x": 568,
+      "y": 424,
+      "intent_prob": 0.528865113001234,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242213_0",
+      "x": 620,
+      "y": 375,
+      "intent_prob": 0.510173466040841,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242213_1",
+      "x": 567,
+      "y": 373,
+      "intent_prob": 0.7800836349368612,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242213_2",
+      "x": 595,
+      "y": 433,
+      "intent_prob": 0.45270065766864753,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242273_0",
+      "x": 551,
+      "y": 443,
+      "intent_prob": 0.35755807539251006,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242273_1",
+      "x": 560,
+      "y": 423,
+      "intent_prob": 0.473344870496074,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242333_0",
+      "x": 597,
+      "y": 422,
+      "intent_prob": 0.5745172880802902,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242333_1",
+      "x": 626,
+      "y": 427,
+      "intent_prob": 0.35395540882184645,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242333_2",
+      "x": 566,
+      "y": 361,
+      "intent_prob": 0.8136763221063528,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242333_3",
+      "x": 569,
+      "y": 378,
+      "intent_prob": 0.7620457401546725,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242393_0",
+      "x": 576,
+      "y": 388,
+      "intent_prob": 0.785694208544749,
+      "is_crossing": false,
+      "anomaly": true,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242393_1",
+      "x": 642,
+      "y": 368,
+      "intent_prob": 0.5920394780085175,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242393_2",
+      "x": 600,
+      "y": 393,
+      "intent_prob": 0.521533846569277,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "high"
+    },
+    {
+      "id": "web_gen_1750242453_0",
+      "x": 627,
+      "y": 355,
+      "intent_prob": 0.8037802714103663,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242453_1",
+      "x": 580,
+      "y": 371,
+      "intent_prob": 0.5765244889181256,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242453_2",
+      "x": 563,
+      "y": 436,
+      "intent_prob": 0.6624104131264883,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242453_3",
+      "x": 575,
+      "y": 451,
+      "intent_prob": 0.7762152783354769,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242453_4",
+      "x": 565,
+      "y": 410,
+      "intent_prob": 0.7222802145311449,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    },
+    {
+      "id": "web_gen_1750242467_0",
+      "x": 585,
+      "y": 397,
+      "intent_prob": 0.8550229081372656,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "medium"
+    },
+    {
+      "id": "web_gen_1750242467_1",
+      "x": 613,
+      "y": 456,
+      "intent_prob": 0.4231005971906183,
+      "is_crossing": false,
+      "anomaly": false,
+      "priority": "normal"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "V1",
+      "x": 600.0,
+      "y": 120.0,
+      "dx": 0.0,
+      "dy": 1.0,
+      "speed": 2.0
+    },
+    {
+      "id": "V2",
+      "x": 600.0,
+      "y": 186.0,
+      "dx": 0.0,
+      "dy": 1.0,
+      "speed": 2.0
+    },
+    {
+      "id": "V3",
+      "x": 600.0,
+      "y": 252.0,
+      "dx": 0.0,
+      "dy": 1.0,
+      "speed": 2.0
+    }
+  ],
+  "ai_decisions": {
+    "system_status": "active",
+    "rsu_detections": 5,
+    "high_priority_count": 0,
+    "medium_priority_count": 0,
+    "total_pedestrians": 5,
+    "wearable_connected": 0,
+    "edge_processing": true
+  }
+}
